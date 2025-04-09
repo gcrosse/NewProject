@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMR CALCULATOR</title>
+    <link rel="stylesheet" href="bmr.css"> 
+    <script src="scripts.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>THE HYBRID ATHLETE'S BLOG</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="video.html">FITNESS VIDEO</a></li>
+                <li><a href="diet.html">DIET PLAN</a></li>
+                <li><a href="bmr.html">BMR CALCULATOR</a></li>
+                <li><a href="about.html">ABOUT ME</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="form-container">
+            <h1>BMR CALCULATOR</h1>
+            <form id="calculator">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" name="weight" placeholder="Weight in kg" min="0" value="0" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" name="height" placeholder="Height in cm" min="0" value="0" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" placeholder="Age" min="0" value="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="select">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="goal">Fitness Goal</label>
+                        <select id="goal" name="goal" required>
+                            <option value="select">Select</option>
+                            <option value="looseFat">Loose Fat & Maintain Muscle</option>
+                            <option value="gainMuscle">Gain Muscle</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="reset">Reset</button>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="results-container">
+            <div class="result-container">
+                <div class="bmr">
+                    <span>BMR</span>
+                    <h2 id="bmr">0</h2>
+                    <p>kcal/day</p>
+                </div>
+                <div class="macros">
+                    <span>Macros</span>
+                    <h2 id="macrosValue">0</h2>
+                    <p>g</p>
+                </div>
+            </div>
+
+            <div class="daily-calories">
+                <h3>Daily Calorie Needs</h3>
+                <ul class="activity-levels">
+                    <li>
+                        <p><strong>Sedentary | 0 to 1 days a week</strong></p>
+                        <span id="sedentary">0</span>
+                    </li>
+                    <li>
+                        <p><strong>Light | 2 days a week</strong></p>
+                        <span id="light">0</span>
+                    </li>
+                    <li>
+                        <p><strong>Moderate | 3 to 4 days a week</strong></p>
+                        <span id="moderate">0</span>
+                    </li>
+                    <li>
+                        <p><strong>Very Active | 5 to 6 days a week</strong></p>
+                        <span id="veryActive">0</span>
+                    </li>
+                    <li>
+                        <p><strong>Extremely Active | 7 days a week or two workouts a day</strong></p>
+                        <span id="extremelyActive">0</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
