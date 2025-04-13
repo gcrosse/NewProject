@@ -1,20 +1,16 @@
-// Dark Mode functionality
 document.addEventListener('DOMContentLoaded', () => {
+    // Dark Mode functionality
     const darkModeButton = document.querySelector('.dark-mode-toggle');
 
-    // Check if darkModeButton exists
     if (darkModeButton) {
         darkModeButton.addEventListener('click', () => {
-            // Toggle dark mode on the body element
             document.body.classList.toggle('dark-mode');
-
-            // Toggle the text on the dark mode button
             if (document.body.classList.contains('dark-mode')) {
-                darkModeButton.textContent = "☀️"; // Switch to Light Mode icon when dark mode is active
-                darkModeButton.setAttribute("aria-label", "Switch to Light Mode"); // Update the aria-label
+                darkModeButton.textContent = "☀️"; // Switch to Light Mode icon
+                darkModeButton.setAttribute("aria-label", "Switch to Light Mode");
             } else {
-                darkModeButton.textContent = "🌙"; // Switch to Dark Mode icon when light mode is active
-                darkModeButton.setAttribute("aria-label", "Switch to Dark Mode"); // Update the aria-label
+                darkModeButton.textContent = "🌙"; // Switch to Dark Mode icon
+                darkModeButton.setAttribute("aria-label", "Switch to Dark Mode");
             }
         });
     } else {
@@ -25,8 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
-            // Scroll to the section with smooth behavior
             document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
@@ -92,14 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Selectors for HTML elements
     const selectors = {
         form: document.getElementById('calculator'),
-        result: document.querySelector('.results-container'), 
+        result: document.querySelector('.results-container'),
         bmr: document.getElementById('bmr'),
         macrosValue: document.getElementById('macrosValue'),
         sedentary: document.getElementById('sedentary'),
         light: document.getElementById('light'),
         moderate: document.getElementById('moderate'),
         veryActive: document.getElementById('veryActive'),
-        extremelyActive: document.getElementById('extremelyActive')    
+        extremelyActive: document.getElementById('extremelyActive')
     };
 
     // Function to render the results to the page
@@ -133,12 +127,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const gender = form.gender.value;
         const goal = form.goal.value;
 
-        if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+        // Validation
+        if (isNaN(weight) || weight <= 0 || isNaN(height) || height <= 0 || isNaN(age) || age <= 0) {
             alert('Please enter valid numeric values for Weight, Height, and Age.');
             return;
         }
 
-        // Hide the results container initially
+        if (gender === "select" || goal === "select") {
+            alert('Please select a valid gender and fitness goal.');
+            return;
+        }
+
         selectors.result.classList.remove("show");
 
         const calc = new BMRCalculator(weight, height, age, gender, goal);
@@ -166,33 +165,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners for form submit and reset
     selectors.form.addEventListener('submit', onFormSubmit);
     selectors.form.addEventListener('reset', onFormReset);
-
-    // Contact Form Submission
-    const contactForm = document.getElementById('contact-form');
-    const responseMessage = document.getElementById('response-message');
-
-    if (contactForm && responseMessage) {
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();  
-
-            console.log('Form submitted'); 
-
-            // Display the success message
-            responseMessage.style.display = 'block';
-            console.log('Success message displayed');  
-
-            // Hide the response message after 5 seconds
-            setTimeout(() => {
-                console.log('Hiding success message');  
-                responseMessage.style.display = 'none';  
-
-                // Reset the form fields after the delay (after showing success message)
-                contactForm.reset(); 
-                console.log('Form reset after success message');
-
-            }, 5000);  
-        });
-    } else {
-        console.log('Form or response message element not found!');
-    }
 });
+
+// This is for my about me page
+// Handle contact form submission
+const contactForm = document.getElementById('contact-form');
+const responseMessage = document.getElementById('response-message');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Optionally, do some basic validation
+        const name = document.getElementById('full-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const comment = document.getElementById('comment').value.trim();
+
+        if (!name || !email || !comment) {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        // Simulate message sent
+        responseMessage.style.display = 'block';
+        responseMessage.innerHTML = `<p>Message sent successfully! ✅</p>`;
+
+        // Clear form fields
+        contactForm.reset();
+
+        // Hide message after a few seconds (optional)
+        setTimeout(() => {
+            responseMessage.style.display = 'none';
+        }, 5000);
+    });
+}

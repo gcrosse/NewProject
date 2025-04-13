@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMR CALCULATOR</title>
-    <link rel="stylesheet" href="bmr.css"> 
+    <link rel="stylesheet" href="style.css"> 
     <script src="scripts.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <h1>THE HYBRID ATHLETE'S BLOG</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="video.html">FITNESS VIDEO</a></li>
-                <li><a href="diet.html">DIET PLAN</a></li>
-                <li><a href="bmr.html">BMR CALCULATOR</a></li>
-                <li><a href="about.html">ABOUT ME</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <h1>THE HYBRID ATHLETE'S BLOG</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="video.html">FITNESS VIDEO</a></li>
+            <li><a href="diet.html">DIET PLAN</a></li>
+            <li><a href="bmr.html">BMR CALCULATOR</a></li>
+            <li><a href="about.html">ABOUT ME</a></li>
+        </ul>
+        <button class="dark-mode-toggle" aria-label="Switch to Dark Mode">🌙</button>
+    </nav>
+</header>
 
     <main class="container">
         <section class="form-container">
@@ -74,9 +75,12 @@
                 </div>
                 <div class="macros">
                     <span>Macros</span>
-                    <h2 id="macrosValue">0</h2>
-                    <p>g</p>
-                </div>
+                    <div id="macrosValue" class="macros-display">
+                        <p>Protein: 0g</p>
+                        <p>Carbs: 0g</p>
+                        <p>Fats: 0g</p>
+                    </div>
+            </div>
             </div>
 
             <div class="daily-calories">
