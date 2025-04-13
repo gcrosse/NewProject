@@ -22,6 +22,7 @@
         </nav>
     </header>
 
+  
     <section id="about">
         <div class="about-content">
             <div class="about-info">
@@ -48,37 +49,35 @@
                     </ul>
                 </div>
             </div>
-            <div class="about-photo">
-                <img src="IMG_6455.jpeg" loading="lazy" alt="..." alt="Profile Picture">
-            </div>
+            <section id="contact">
+                <h2>Contact Me</h2>
+                <form id="contact-form" action="javascript:void(0);" method="POST">
+                    <div class="form-group">
+                        <label for="full-name">Full Name:</label>
+                        <input type="text" id="full-name" name="full-name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+            
+                    <div class="form-group comment-section">
+                        <label for="comment">Comment:</label>
+                        <textarea id="comment" name="comment" rows="4" required></textarea>
+                    </div>
+            
+                    <button type="submit">Submit</button>
+                </form>
+            
+                <div id="response-message" style="display:none;">
+                    <p>Thank you for your submission!</p>
+                </div>
+            </section>
         </div>
     </section>
 
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form id="contact-form" action="javascript:void(0);" method="POST">
-            <div class="form-group">
-                <label for="full-name">Full Name:</label>
-                <input type="text" id="full-name" name="full-name" required>
-            </div>
     
-            <div class="form-group">
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-    
-            <div class="form-group comment-section">
-                <label for="comment">Comment:</label>
-                <textarea id="comment" name="comment" rows="4" required></textarea>
-            </div>
-    
-            <button type="submit">Submit</button>
-        </form>
-    
-        <div id="response-message" style="display:none;">
-            <p>Thank you for your submission!</p>
-        </div>
-    </section>
     
     <script src="scripts.js"></script>
 </body>

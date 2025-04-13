@@ -8,40 +8,67 @@
 </head>
 
 <body>
-  <header>
-    <h1>THE HYBRID ATHLETE'S BLOG</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html" aria-current="page">HOME</a></li>
-        <li><a href="video.html">FITNESS VIDEO</a></li>
-        <li><a href="diet.html">DIET PLAN</a></li>
-        <li><a href="bmr.html">BMR CALCULATOR</a></li>
-        <li><a href="about.html">ABOUT ME</a></li>
-      </ul>
-      <button class="dark-mode-toggle" aria-label="Toggle dark mode">🌙</button>
-    </nav>
-  </header>
+  <!-- Hero Title Section (outside the grid) -->
+  <section class="hero-title">
+    <h1>LETS GET FIT | THE HYBRID ATHLETE'S BLOG</h1>
+  </section>
 
   <main>
-    <section class="hero-container">
-        <div class="hero-wrapper">
-          <img src="IMG_6272.jpg" alt="A motivational image of fitness" class="hero-image" loading="lazy" />
-          <div class="hero-text">
-            <h2>LET'S GET FIT</h2>
-          </div>
+    <div class="image-grid">
+      <!-- Linked images (top row) -->
+      <a href="video.html" class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6478.jpeg" alt="Fitness Video" loading="lazy"/>
+          <div class="tile-label">Fitness Video</div>
         </div>
-      </section>
+      </a>
+      
+      <a href="diet.html" class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6486.jpeg" alt="Diet Plan" loading="lazy"/>
+          <div class="tile-label">Diet Plan</div>
+        </div>
+      </a>
+      
+      <a href="bmr.html" class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6481.jpeg" alt="BMR Calculator" loading="lazy"/>
+          <div class="tile-label">BMR Calculator</div>
+        </div>
+      </a>
+      
+      <a href="about.html" class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6485.jpeg" alt="About Me" loading="lazy"/>
+          <div class="tile-label">About Me</div>
+        </div>
+      </a>
 
-    <section class="intro-text" style="max-width: 800px; margin: 40px auto; text-align: center;">
-      <p>
-        Fitness is more than a routine — it's a journey of growth, discipline, and self-discovery. From bodyweight workouts to resistance training, I've explored a variety of methods that challenge both mind and body. Along the way, I've found inspiration in some incredible fitness influencers who motivate me to push harder, train smarter, and never stop learning.
-      </p>
-      <p>
-        This blog is where I share the insights, resources, and tools that fuel my hybrid fitness lifestyle. Whether you're just starting or you're looking to step things up, you're in the right place. Let’s grow stronger — together.
-      </p>
-    </section>
+      <!-- Decorative tiles (bottom row) -->
+      <div class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6482.jpeg" alt="Fitness Vibes" loading="lazy"/>
+        </div>
+      </div>
+      <div class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6484.jpeg" alt="Meal Prep" loading="lazy"/>
+        </div>
+      </div>
+      <div class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6480.jpeg" alt="Workout Routine" loading="lazy"/>
+        </div>
+      </div>
+      <div class="grid-tile">
+        <div class="tile-content">
+          <img src="IMG_6479.jpeg" alt="Macro Split" loading="lazy"/>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script src="scripts.js"></script>
 </body>
 </html>
+

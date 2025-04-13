@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // This is for my about me page
-// Handle contact form submission
 const contactForm = document.getElementById('contact-form');
 const responseMessage = document.getElementById('response-message');
 
@@ -176,7 +175,6 @@ if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Optionally, do some basic validation
         const name = document.getElementById('full-name').value.trim();
         const email = document.getElementById('email').value.trim();
         const comment = document.getElementById('comment').value.trim();
@@ -186,7 +184,7 @@ if (contactForm) {
             return;
         }
 
-        // Simulate message sent
+
         responseMessage.style.display = 'block';
         responseMessage.innerHTML = `<p>Message sent successfully! ✅</p>`;
 
@@ -199,3 +197,51 @@ if (contactForm) {
         }, 5000);
     });
 }
+
+// This is the script for ARRAYS in the diet.html.
+  const mealPlan = [
+    { meal: "Breakfast", items: "Oatmeal with fruits, nuts, and a cup of green tea." },
+    { meal: "Mid-Morning Snack", items: "Greek yogurt with a handful of mixed berries." },
+    { meal: "Lunch", items: "Grilled chicken breast, quinoa, and a large mixed salad with olive oil dressing." },
+    { meal: "Afternoon Snack", items: "A small apple and a handful of almonds." },
+    { meal: "Dinner", items: "Baked salmon with roasted vegetables (e.g., broccoli, sweet potatoes) and brown rice." },
+    { meal: "Evening Snack", items: "A piece of dark chocolate and herbal tea." }
+  ];
+
+  const container = document.getElementById("meal-plan-container");
+
+  const mealList = document.createElement("ul");
+  mealList.classList.add("dynamic-meal-list");
+
+  mealPlan.forEach(entry => {
+    const li = document.createElement("li");
+    li.innerHTML = `<strong>${entry.meal}:</strong> ${entry.items}`;
+    mealList.appendChild(li);
+  });
+
+  container.appendChild(mealList);
+
+
+  // ABOUT US PAGE Conditional STATEMENT Add form validation on submit
+  document.getElementById('contact-form').addEventListener('submit', function (event) {
+      
+      event.preventDefault();
+
+      const fullName = document.getElementById('full-name').value;
+      const email = document.getElementById('email').value;
+      const comment = document.getElementById('comment').value;
+      
+    
+      if (!fullName || !email || !comment) {
+          alert("All fields are required. Please fill out your name, email, and comment.");
+          return;  
+      }
+
+     
+      document.getElementById('response-message').style.display = "block";
+      document.getElementById('contact-form').reset(); 
+
+     
+  });
+
+
