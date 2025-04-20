@@ -36,3 +36,100 @@ This project is a website for tracking fitness, diet, and other personal goals. 
 - Additional fitness challenges
 - Meal tracking system
 
+
+
+
+
+ Dark Mode Toggle
+
+    darkModeButton: Button that toggles dark mode
+
+    isDark: Boolean state of the theme (true if dark)
+
+BMR Calculator
+Classes:
+
+    BMRCalculator:
+
+        weight, height, age, gender, goal: User inputs
+
+        calculateBMR(): Returns BMR value
+
+        calculateMacros(): Returns recommended macros
+
+        getResult(): Returns full result (BMR, activity levels, macros)
+
+Elements:
+
+    selectors: Object holding DOM references:
+
+        form, result, bmr, macrosValue, sedentary, light, moderate, veryActive, extremelyActive
+
+Chart Instances:
+
+    macroChartInstance: Stores Chart.js instance for macros
+
+    activityChartInstance: Stores Chart.js instance for activity levels
+
+📬 Contact Form
+
+    contactForm: Form element for contact
+
+    responseMessage: Element to show submission response
+
+    nameField, emailField, commentField: Input fields
+
+    name, email, comment: Values from fields
+
+🍽️ Meal Plan Renderer
+
+    mealPlan: Array of meals with descriptions
+
+    container: DOM element for rendering the meal list
+
+    mealList: <ul> list element generated dynamically
+
+Fitness Challenge
+Classes:
+
+    Challenge:
+
+        name, description, target, duration, startDate: Challenge metadata
+
+        participants: Array of participants with progress
+
+    UI:
+
+        Uses challenge instance to manage UI
+
+        Methods: registerParticipant, updateProgress, displayLeaderboard
+
+Instances:
+
+    challenge: New Challenge object
+
+    ui: UI manager tied to the challenge
+
+DOM:
+
+    progress-bar: Element updated with user progress
+
+    leaderboard: <ul> for listing participants
+
+Weather Checker
+
+    city: Input value from weather form
+
+    loading, error, empty, weatherData: Various display elements
+
+    apiKey: OpenWeatherMap API key
+
+Stock Price Tracker
+
+    symbol: Input symbol from user
+
+    loading, error, empty, dataBox: DOM feedback elements
+
+    apiKey: Alpha Vantage API key
+
+    price, latestTime: Extracted stock data
