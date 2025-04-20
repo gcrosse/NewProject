@@ -786,3 +786,33 @@ body.dark-mode .daily-calories li {
     margin-top: 20px;
     text-align: center;
 }
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  body.dark-mode header,
+  body.dark-mode nav,
+  body.dark-mode .main-container,
+  body.dark-mode #fitness-challenge-container,
+  body.dark-mode #weather-container,
+  body.dark-mode #finance-container {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-color: #333;
+  }
+  
+  /* Optional: input styling */
+  body.dark-mode input,
+  body.dark-mode textarea {
+    background-color: #2c2c2c;
+    color: #fff;
+    border: 1px solid #555;
+  }
+  
+  /* Buttons */
+  body.dark-mode button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+  }
