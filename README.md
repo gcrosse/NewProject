@@ -20,3 +20,19 @@ Tech Stack
 >  Responsive Design: The website is optimized for various screen sizes and devices (desktop, tablet, mobile).
 >  Dark Mode Toggle: A user-friendly option for switching between light and dark themes.
 
+# UPDATED 2025/04/19
+
+## Overview
+This project is a website for tracking fitness, diet, and other personal goals. It includes features such as a BMR calculator, fitness challenges, weather updates, and stock tracking.
+
+## Features
+- **BMR Calculator:** Calculates basal metabolic rate based on user's input.
+- **Fitness Challenge:** Join a 30-day push-up challenge and track progress.
+- **Weather Checker:** Get the current weather for your location.
+- **Stock Tracker:** Track live stock prices.
+
+## Upcoming Features
+- Dark Mode
+- Additional fitness challenges
+- Meal tracking system
+
