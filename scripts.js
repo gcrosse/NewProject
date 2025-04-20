@@ -197,6 +197,9 @@ if (contactForm) {
         const email = emailField.value.trim();
         const comment = commentField.value.trim();
 
+        console.log("Contact form submitted:", { name, email, comment });
+
+
         if (!name || !email || !comment) {
             alert("Please fill out all fields.");
             return;
