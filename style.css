@@ -221,6 +221,140 @@ button {
     }
 }
 
+
+/* Main container style */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap; /* Ensures the sections wrap on smaller screens */
+}
+
+/* Top section layout */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Individual sections */
+#fitness-challenge-container,
+#weather-container,
+#finance-container {
+    flex: 1;
+    min-width: 300px; /* Ensure sections don't get too narrow on small screens */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adding shadow */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Hover effect for shadow */
+#fitness-challenge-container:hover,
+#weather-container:hover,
+#finance-container:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for form inputs and buttons */
+input[type="text"], button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: Ensure text aligns properly inside sections */
+h2, h3, h4, p {
+    margin-bottom: 10px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout */
+.main-container {
+    padding: 20px;
+}
+
+.top-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+#fitness-challenge-container,
+#weather-container,
+#finance-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+#fitness-challenge-container:hover,
+#weather-container:hover,
+#finance-container:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Forms */
+input[type="text"],
+button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Progress bar */
+#progress-bar {
+    width: 0%;
+    height: 20px;
+    background-color: green;
+    margin-top: 10px;
+}
+
+/* Headings and spacing */
+h2, h3, h4, p {
+    margin-bottom: 10px;
+}
+
 /* ==============================
    VIDEO SECTION
 ============================== */
@@ -384,6 +518,12 @@ body.dark-mode .bmr-summary {
 body.dark-mode .daily-calories li {
     background-color: #3e4d5f;
     color: #f0f0f0;
+}
+/* New Feature Add Graph*/
+canvas {
+    display: block;
+    margin: 1rem auto; 
+    max-width: 75%;
 }
 
 /* ==============================
@@ -614,3 +754,35 @@ body.dark-mode .daily-calories li {
     }
   }
   
+/* ==============================
+  Centering the Stock and Weather
+============================== */
+
+  /* Centering the containers */
+#weather-container, #finance-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+/* Styling the form elements */
+#weather-form input, #finance-form input {
+    padding: 10px;
+    margin: 5px;
+    width: 80%;
+    max-width: 300px;
+}
+
+#weather-form button, #finance-form button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Styling the data display */
+#weather-data, #finance-data {
+    margin-top: 20px;
+    text-align: center;
+}

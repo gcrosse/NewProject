@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMR CALCULATOR</title>
-    <link rel="stylesheet" href="style.css"> 
-    <script src="scripts.js" defer></script>
+    <link rel="stylesheet" href="../css/style.css"> 
+    <script src="../javascript/scripts.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -13,11 +14,11 @@
     <h1>THE HYBRID ATHLETE'S BLOG</h1>
     <nav>
         <ul>
-            <li><a href="index.html">HOME</a></li>
-            <li><a href="video.html">FITNESS VIDEO</a></li>
-            <li><a href="diet.html">DIET PLAN</a></li>
-            <li><a href="bmr.html">BMR CALCULATOR</a></li>
-            <li><a href="about.html">ABOUT ME</a></li>
+            <li><a href="../html/index.html">HOME</a></li>
+            <li><a href="../html/video.html">FITNESS VIDEO</a></li>
+            <li><a href="../html/diet.html">DIET PLAN</a></li>
+            <li><a href="../html/bmr.html">BMR CALCULATOR</a></li>
+            <li><a href="../html/about.html">ABOUT ME</a></li>
         </ul>
         <button class="dark-mode-toggle" aria-label="Switch to Dark Mode">🌙</button>
     </nav>
@@ -60,7 +61,7 @@
                 <div class="form-row">
                     <div class="input-group">
                         <label for="gender">Gender</label>
-                        <select id="gender" required>
+                        <select id="gender" name="gender" required>
                             <option value="select">Select</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -98,7 +99,9 @@
                     </div>
             </div>
             </div>
-
+            <!-- This is a new macroChart -->
+            <canvas id="macroChart" width="400" height="200"></canvas>
+            <canvas id="activityChart" width="400" height="200"></canvas>
             <div class="daily-calories">
                 <h3>Daily Calorie Needs</h3>
                 <ul class="activity-levels">

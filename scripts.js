@@ -1,33 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Dark Mode functionality
     const darkModeButton = document.querySelector('.dark-mode-toggle');
+
+    // Dark Mode - Load saved state
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        if (darkModeButton) {
+            darkModeButton.textContent = "☀️";
+            darkModeButton.setAttribute("aria-label", "Switch to Light Mode");
+        }
+    }
 
     if (darkModeButton) {
         darkModeButton.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                darkModeButton.textContent = "☀️"; // Switch to Light Mode icon
-                darkModeButton.setAttribute("aria-label", "Switch to Light Mode");
-            } else {
-                darkModeButton.textContent = "🌙"; // Switch to Dark Mode icon
-                darkModeButton.setAttribute("aria-label", "Switch to Dark Mode");
-            }
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+            darkModeButton.textContent = isDark ? "☀️" : "🌙";
+            darkModeButton.setAttribute("aria-label", isDark ? "Switch to Light Mode" : "Switch to Dark Mode");
         });
-    } else {
-        console.log('Dark mode button not found!');
     }
 
-    // Adding smooth scrolling feature for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
         });
     });
 
-    // BMR Calculator Class
+    // BMR Calculator with Charts
     class BMRCalculator {
         constructor(weight, height, age, gender, goal) {
             this.weight = weight;
@@ -39,37 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         calculateBMR() {
             let bmr = 10 * this.weight + 6.25 * this.height - 5 * this.age;
-            if (this.gender === 'male') {
-                bmr += 5;
-            } else if (this.gender === 'female') {
-                bmr -= 161;
-            }
-            return bmr;
+            return this.gender === 'male' ? bmr + 5 : bmr - 161;
         }
 
         calculateMacros() {
-            const protein = this.weight * 2.2; // Protein: 2.2g per kg of body weight
-            const carbs = this.weight * 3;     // Carbs: 3g per kg of body weight
-            let fats;
-
-            switch (this.goal) {
-                case "looseFat":
-                    fats = this.weight * 0.8; // Fats: 0.8g per kg for fat loss
-                    break;
-                case "gainMuscle":
-                    fats = this.weight * 1.0; // Fats: 1g per kg for muscle gain
-                    break;
-                default:
-                    fats = this.weight * 1.0; // Default fats value
-                    console.warn("Invalid or missing goal; using default fats value.");
-            }
-
+            const protein = this.weight * 2.2;
+            const carbs = this.weight * 3;
+            let fats = this.goal === "looseFat" ? this.weight * 0.8 : this.weight * 1.0;
             return { protein, carbs, fats };
         }
 
         getResult() {
             const bmr = this.calculateBMR();
-
             const activityLevels = {
                 sedentary: bmr * 1.2,
                 light: bmr * 1.375,
@@ -77,13 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 veryActive: bmr * 1.725,
                 extremelyActive: bmr * 1.9
             };
-
             const macros = this.calculateMacros();
             return { bmr, activityLevels, macros };
         }
     }
 
-    // Selectors for HTML elements
     const selectors = {
         form: document.getElementById('calculator'),
         result: document.querySelector('.results-container'),
@@ -96,14 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
         extremelyActive: document.getElementById('extremelyActive')
     };
 
-    // Function to render the results to the page
+    let macroChartInstance = null;
+    let activityChartInstance = null;
+
     const render = ({ bmr, activityLevels, macros }) => {
         selectors.bmr.textContent = Math.round(bmr).toLocaleString("en");
 
         for (const key in activityLevels) {
-            const calories = Math.round(activityLevels[key]);
             if (selectors[key]) {
-                selectors[key].textContent = calories.toLocaleString("en");
+                selectors[key].textContent = Math.round(activityLevels[key]).toLocaleString("en");
             }
         }
 
@@ -113,28 +92,61 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Carbs: ${macros.carbs.toFixed(2)}g</p>
             <p>Fats: ${macros.fats.toFixed(2)}g</p>
         `;
+
+        if (macroChartInstance) macroChartInstance.destroy();
+        if (activityChartInstance) activityChartInstance.destroy();
+
+        const macroChartCtx = document.getElementById('macroChart')?.getContext('2d');
+        if (macroChartCtx) {
+            macroChartInstance = new Chart(macroChartCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Protein (g)', 'Carbs (g)', 'Fats (g)'],
+                    datasets: [{
+                        data: [macros.protein, macros.carbs, macros.fats],
+                        backgroundColor: ['#36a2eb', '#ffcd56', '#ff6384']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        const activityChartCtx = document.getElementById('activityChart')?.getContext('2d');
+        if (activityChartCtx) {
+            activityChartInstance = new Chart(activityChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sedentary', 'Light', 'Moderate', 'Very Active', 'Extremely Active'],
+                    datasets: [{
+                        label: 'Calories/day',
+                        data: Object.values(activityLevels).map(cals => Math.round(cals)),
+                        backgroundColor: '#4bc0c0'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
     };
 
-    // Function to handle form submission
     const onFormSubmit = (e) => {
         e.preventDefault();
-
         const form = e.target;
-
         const weight = parseFloat(form.weight.value);
         const height = parseFloat(form.height.value);
         const age = parseInt(form.age.value, 10);
         const gender = form.gender.value;
         const goal = form.goal.value;
 
-        // Validation
-        if (isNaN(weight) || weight <= 0 || isNaN(height) || height <= 0 || isNaN(age) || age <= 0) {
-            alert('Please enter valid numeric values for Weight, Height, and Age.');
-            return;
-        }
-
-        if (gender === "select" || goal === "select") {
-            alert('Please select a valid gender and fitness goal.');
+        if (isNaN(weight) || isNaN(height) || isNaN(age) || gender === "select" || goal === "select") {
+            alert("Please enter valid information.");
             return;
         }
 
@@ -142,106 +154,242 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const calc = new BMRCalculator(weight, height, age, gender, goal);
 
-        // Use setTimeout if you want to simulate a delay for visual effect
         setTimeout(() => {
             render(calc.getResult());
             selectors.result.classList.add("show");
         }, 400);
     };
 
-    // Function to handle form reset
     const onFormReset = () => {
         selectors.form.reset();
         selectors.result.classList.remove("show");
-        selectors.sedentary.textContent = '0';
-        selectors.light.textContent = '0';
-        selectors.moderate.textContent = '0';
-        selectors.veryActive.textContent = '0';
-        selectors.extremelyActive.textContent = '0';
-        selectors.macrosValue.innerHTML = '';
         selectors.bmr.textContent = '0';
+        selectors.macrosValue.innerHTML = '';
+        ['sedentary', 'light', 'moderate', 'veryActive', 'extremelyActive'].forEach(key => {
+            selectors[key].textContent = '0';
+        });
+        if (macroChartInstance) macroChartInstance.destroy();
+        if (activityChartInstance) activityChartInstance.destroy();
     };
 
-    // Event listeners for form submit and reset
-    selectors.form.addEventListener('submit', onFormSubmit);
-    selectors.form.addEventListener('reset', onFormReset);
+    if (selectors.form) {
+        selectors.form.addEventListener('submit', onFormSubmit);
+        selectors.form.addEventListener('reset', onFormReset);
+    }
 });
 
-// This is for my about me page
+// Contact Form Handler
 const contactForm = document.getElementById('contact-form');
 const responseMessage = document.getElementById('response-message');
 
 if (contactForm) {
+    const nameField = document.getElementById('full-name');
+    const emailField = document.getElementById('email');
+    const commentField = document.getElementById('comment');
+
+    // Autofill if saved
+    if (localStorage.getItem("contactName")) nameField.value = localStorage.getItem("contactName");
+    if (localStorage.getItem("contactComment")) commentField.value = localStorage.getItem("contactComment");
+
     contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-
-        const name = document.getElementById('full-name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const comment = document.getElementById('comment').value.trim();
+        const name = nameField.value.trim();
+        const email = emailField.value.trim();
+        const comment = commentField.value.trim();
 
         if (!name || !email || !comment) {
             alert("Please fill out all fields.");
             return;
         }
 
+        // Save input to localStorage
+        localStorage.setItem("contactName", name);
+        localStorage.setItem("contactComment", comment);
 
         responseMessage.style.display = 'block';
         responseMessage.innerHTML = `<p>Message sent successfully! ✅</p>`;
-
-        // Clear form fields
         contactForm.reset();
 
-        // Hide message after a few seconds (optional)
         setTimeout(() => {
             responseMessage.style.display = 'none';
         }, 5000);
     });
 }
 
-// This is the script for ARRAYS in the diet.html.
-  const mealPlan = [
+// Meal Plan Renderer
+const mealPlan = [
     { meal: "Breakfast", items: "Oatmeal with fruits, nuts, and a cup of green tea." },
     { meal: "Mid-Morning Snack", items: "Greek yogurt with a handful of mixed berries." },
     { meal: "Lunch", items: "Grilled chicken breast, quinoa, and a large mixed salad with olive oil dressing." },
     { meal: "Afternoon Snack", items: "A small apple and a handful of almonds." },
     { meal: "Dinner", items: "Baked salmon with roasted vegetables (e.g., broccoli, sweet potatoes) and brown rice." },
     { meal: "Evening Snack", items: "A piece of dark chocolate and herbal tea." }
-  ];
+];
 
-  const container = document.getElementById("meal-plan-container");
+const container = document.getElementById("meal-plan-container");
+if (container) {
+    const mealList = document.createElement("ul");
+    mealList.classList.add("dynamic-meal-list");
+    mealPlan.forEach(entry => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${entry.meal}:</strong> ${entry.items}`;
+        mealList.appendChild(li);
+    });
+    container.appendChild(mealList);
+}
 
-  const mealList = document.createElement("ul");
-  mealList.classList.add("dynamic-meal-list");
+// Fitness Challenge
+class Challenge {
+    constructor(name, description, target, duration, startDate) {
+        this.name = name;
+        this.description = description;
+        this.target = target;
+        this.duration = duration;
+        this.startDate = startDate;
+        this.participants = [];
+    }
 
-  mealPlan.forEach(entry => {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${entry.meal}:</strong> ${entry.items}`;
-    mealList.appendChild(li);
-  });
+    registerParticipant(name) {
+        if (!this.participants.find(p => p.name === name)) {
+            this.participants.push({ name, progress: 0 });
+        }
+    }
 
-  container.appendChild(mealList);
+    updateProgress(name, progress) {
+        const p = this.participants.find(p => p.name === name);
+        if (p) p.progress = progress;
+    }
 
+    getLeaderboard() {
+        return this.participants.sort((a, b) => b.progress - a.progress);
+    }
+}
 
-  // ABOUT US PAGE Conditional STATEMENT Add form validation on submit
-  document.getElementById('contact-form').addEventListener('submit', function (event) {
-      
-      event.preventDefault();
+class UI {
+    constructor(challenge) {
+        this.challenge = challenge;
+    }
 
-      const fullName = document.getElementById('full-name').value;
-      const email = document.getElementById('email').value;
-      const comment = document.getElementById('comment').value;
-      
-    
-      if (!fullName || !email || !comment) {
-          alert("All fields are required. Please fill out your name, email, and comment.");
-          return;  
-      }
+    registerParticipant(name) {
+        this.challenge.registerParticipant(name);
+    }
 
-     
-      document.getElementById('response-message').style.display = "block";
-      document.getElementById('contact-form').reset(); 
+    updateProgress(name, progress) {
+        this.challenge.updateProgress(name, progress);
+        document.getElementById("progress-bar").style.width = `${progress}%`;
+        this.displayLeaderboard();
+    }
 
-     
-  });
+    displayLeaderboard() {
+        const leaderboard = document.getElementById("leaderboard");
+        leaderboard.innerHTML = "";
+        this.challenge.getLeaderboard().forEach(p => {
+            const li = document.createElement("li");
+            li.textContent = `${p.name} - ${p.progress}%`;
+            leaderboard.appendChild(li);
+        });
+    }
+}
 
+const challenge = new Challenge("30-Day Push-Up Challenge", "Do 50 push-ups every day for 30 days.", "50 push-ups", "30 days", new Date().toISOString());
+const ui = new UI(challenge);
 
+// Load saved participant
+const savedParticipant = localStorage.getItem("fitnessParticipant");
+if (savedParticipant) {
+    ui.registerParticipant(savedParticipant);
+    ui.displayLeaderboard();
+}
+
+document.getElementById("register-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    if (name) {
+        localStorage.setItem("fitnessParticipant", name); // Save name
+        ui.registerParticipant(name);
+        ui.displayLeaderboard();
+    }
+});
+
+setInterval(() => {
+    const name = challenge.participants[0]?.name;
+    if (name) {
+        const progress = Math.floor(Math.random() * 101);
+        ui.updateProgress(name, progress);
+    }
+}, 5000);
+
+// Weather Checker
+document.getElementById("weather-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const city = document.getElementById("city").value.trim();
+    const loading = document.getElementById("loading-message");
+    const error = document.getElementById("error-message");
+    const empty = document.getElementById("empty-message");
+    const weatherData = document.getElementById("weather-data");
+
+    loading.style.display = "block";
+    error.style.display = "none";
+    empty.style.display = "none";
+    weatherData.style.display = "none";
+
+    const apiKey = "0c301a4b5fd5e0033c7fbbdfc36b1e5e";
+
+    try {
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        const data = await res.json();
+
+        if (data.cod !== 200) throw new Error("City not found");
+
+        document.getElementById("city-name").textContent = `${data.name}, ${data.sys.country}`;
+        document.getElementById("temperature").textContent = `Temperature: ${data.main.temp}°C`;
+        document.getElementById("description").textContent = `Condition: ${data.weather[0].description}`;
+
+        loading.style.display = "none";
+        weatherData.style.display = "block";
+    } catch (err) {
+        loading.style.display = "none";
+        error.style.display = "block";
+        error.textContent = err.message;
+    }
+});
+
+// Stock Price Tracker
+document.getElementById("finance-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const symbol = document.getElementById("symbol").value.trim().toUpperCase();
+    const loading = document.getElementById("finance-loading");
+    const error = document.getElementById("finance-error");
+    const empty = document.getElementById("finance-empty");
+    const dataBox = document.getElementById("finance-data");
+
+    loading.style.display = "block";
+    error.style.display = "none";
+    empty.style.display = "none";
+    dataBox.style.display = "none";
+
+    const apiKey = "your-alpha-vantage-api-key"; // Replace with real key
+
+    try {
+        const res = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=1min&apikey=${apiKey}`);
+        const data = await res.json();
+
+        if (data["Error Message"] || !data["Time Series (1min)"]) {
+            throw new Error("Stock symbol not found");
+        }
+
+        const latestTime = Object.keys(data["Time Series (1min)"])[0];
+        const price = data["Time Series (1min)"][latestTime]["1. open"];
+
+        document.getElementById("finance-symbol").textContent = `Stock: ${symbol}`;
+        document.getElementById("finance-price").textContent = `Price: $${parseFloat(price).toFixed(2)}`;
+
+        loading.style.display = "none";
+        dataBox.style.display = "block";
+    } catch (err) {
+        loading.style.display = "none";
+        error.style.display = "block";
+        error.textContent = err.message;
+    }
+});
