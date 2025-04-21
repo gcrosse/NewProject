@@ -1,135 +1,111 @@
-#README - The Hybrid Athlete's Blog#
+I did several commmits. Felt i probably missed something so added them  here....
 
-#Overview#
+The Hybrid Athlete's Blog — README
 
-Welcome to The Hybrid Athlete's Blog! This website is designed to share personal fitness insights, workouts, nutrition plans, and tools to help athletes achieve their 
-optimal physical condition. The blog includes features like a fitness video section, a diet plan, a BMR (Basal Metabolic Rate) calculator, and an about me section that details my journey as a hybrid athlete.
+Overview
+
+Welcome to The Hybrid Athlete's Blog — a personal platform to share insights on fitness, nutrition, and performance. It includes interactive tools, informative content, and a snapshot of my fitness journey.
+________________________________________
 
 Features
->  Home Page: An introduction to the Hybrid Athlete Blog and its content.
->  Fitness Video: A section showcasing videos related to fitness routines and exercises.
->  Diet Plan: A comprehensive diet plan to complement your fitness goals.
->  BMR Calculator: A tool that helps you calculate your BMR and daily calorie requirements.
->  About Me: A personal page detailing my fitness journey, accomplishments, and how I maintain my physical health.
->  Contact Form: A simple form for users to contact and interact with me, with a message submission confirmation.
+•	Home Page: Introduction to the blog and featured sections.
+•	Fitness Video Section: Curated videos showcasing workout routines and exercises.
+•	Diet Plan: A structured plan aligned with fitness goals.
+•	BMR Calculator: Calculates Basal Metabolic Rate and daily calorie needs.
+•	About Me: A personal profile with biography, photo, and accomplishments.
+•	Contact Form: Submit messages directly via a built-in form with confirmation feedback.
+•	Weather & Stock Tracker: Check the weather or monitor stock prices (optional tools).
+•	Fitness Challenge: Join a 30-day push-up challenge with progress tracking.
+________________________________________ 
 
 Tech Stack
->  HTML: Used for structuring the content and pages.
->  CSS: For styling the website with responsive and adaptive layouts.
->  JavaScript: Adds interactive elements like dark mode toggle, form submission handling, and BMR calculator functionality.
->  Responsive Design: The website is optimized for various screen sizes and devices (desktop, tablet, mobile).
->  Dark Mode Toggle: A user-friendly option for switching between light and dark themes.
+•	HTML: Content structure and page layout.
+•	CSS: Responsive design with support for dark and light themes.
+•	JavaScript: Handles interactivity, animations, and data visualization.
+•	Chart.js: Renders dynamic charts for BMR/macros.
+•	Responsive Design: Optimized for desktop, tablet, and mobile devices.
+•	Dark Mode: Toggleable UI theme for better readability and user comfort.
+________________________________________
 
-# UPDATED 2025/04/19
+Pages Breakdown
 
-## Overview
-This project is a website for tracking fitness, diet, and other personal goals. It includes features such as a BMR calculator, fitness challenges, weather updates, and stock tracking.
+.html
+•	Homepage introducing the blog and linking to all key sections.
+about.html
+•	Two-column layout with:
+o	A profile photo.
+o	Personal biography.
+o	List of achievements.
+•	Fully responsive for all devices.
+bmr.html
+•	Interactive BMR calculator form.
+•	Inputs: Age, weight, height, gender, and activity level.
+•	Outputs: BMR, calorie needs, macronutrient breakdown.
+•	Includes:
+o	Summary box
+o	Chart display (optional)
+o	Dark mode support
+________________________________________ 
 
-## Features
-- **BMR Calculator:** Calculates basal metabolic rate based on user's input.
-- **Fitness Challenge:** Join a 30-day push-up challenge and track progress.
-- **Weather Checker:** Get the current weather for your location.
-- **Stock Tracker:** Track live stock prices.
-
-## Upcoming Features
-- Dark Mode
-- Additional fitness challenges
-- Meal tracking system
-
-
-
-
-
- Dark Mode Toggle
-
-    darkModeButton: Button that toggles dark mode
-
-    isDark: Boolean state of the theme (true if dark)
-
-BMR Calculator
-Classes:
-
-    BMRCalculator:
-
-        weight, height, age, gender, goal: User inputs
-
-        calculateBMR(): Returns BMR value
-
-        calculateMacros(): Returns recommended macros
-
-        getResult(): Returns full result (BMR, activity levels, macros)
-
-Elements:
-
-    selectors: Object holding DOM references:
-
-        form, result, bmr, macrosValue, sedentary, light, moderate, veryActive, extremelyActive
-
-Chart Instances:
-
-    macroChartInstance: Stores Chart.js instance for macros
-
-    activityChartInstance: Stores Chart.js instance for activity levels
-
-📬 Contact Form
-
-    contactForm: Form element for contact
-
-    responseMessage: Element to show submission response
-
-    nameField, emailField, commentField: Input fields
-
-    name, email, comment: Values from fields
-
-🍽️ Meal Plan Renderer
-
-    mealPlan: Array of meals with descriptions
-
-    container: DOM element for rendering the meal list
-
-    mealList: <ul> list element generated dynamically
-
+JavaScript Modules
+Dark Mode Toggle.
+•	darkModeButton: Toggles light/dark theme
+•	isDark: Boolean flag for theme state
+ BMR Calculator
+Class: BMRCalculator
+•	Inputs: weight, height, age, gender, goal
+•	Methods: calculateBMR(), calculateMacros(), getResult()
+DOM Elements:
+•	form, result, bmr, macrosValue, activity levels
+Charts:
+•	macroChartInstance (Chart.js)
+•	 activityChartInstance
+ Contact Form
+•	Fields: name, email, comment
+•	Form submission with confirmation message
+Meal Plan Renderer
+•	Renders a meal list from an array of meals
+•	Dynamically generates <ul> content
 Fitness Challenge
-Classes:
+Class: Challenge
+•	Metadata: name, description, target, duration, startDate
+•	Tracks participants and progress
 
-    Challenge:
 
-        name, description, target, duration, startDate: Challenge metadata
+Class: UI
+•	Methods: registerParticipant, updateProgress, displayLeaderboard
 
-        participants: Array of participants with progress
-
-    UI:
-
-        Uses challenge instance to manage UI
-
-        Methods: registerParticipant, updateProgress, displayLeaderboard
-
-Instances:
-
-    challenge: New Challenge object
-
-    ui: UI manager tied to the challenge
 
 DOM:
-
-    progress-bar: Element updated with user progress
-
-    leaderboard: <ul> for listing participants
+•	progress-bar
+•	leaderboard
 
 Weather Checker
+•	Inputs: city
+•	API: OpenWeatherMap
+•	Displays weather data with loading/error states
 
-    city: Input value from weather form
+Stock Tracker
+•	Inputs: stock symbol
+•	API: Alpha Vantage
+•	Outputs: stock price and latest time
+________________________________________
+CSS & Styles
 
-    loading, error, empty, weatherData: Various display elements
+Global Styles
 
-    apiKey: OpenWeatherMap API key
+•	Font: Jost from Google Fonts
+•	Color variables and base resets
+•	Responsive layout with flexbox and media queries
+•	Full dark mode support via .dark-mode class
+Component-Specific Styles
+•	Header & Navigation
+•	Diet / Meal Plan
+•	BMR Result & Summary Box
+•	About Section
+•	Video Grid Section
+•	Contact Form
+•	Index Image Grid
+•	Weather & Stock Tracker
+•	Fitness Challenge Progress
 
-Stock Price Tracker
-
-    symbol: Input symbol from user
-
-    loading, error, empty, dataBox: DOM feedback elements
-
-    apiKey: Alpha Vantage API key
-
-    price, latestTime: Extracted stock data
